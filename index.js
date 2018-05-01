@@ -22,7 +22,7 @@ app.on('ready', function(){
 
     mainWindow.webContents.openDevTools()
 
-    mainWindow.loadURL(__dirname + "/ui/home.html")
+    mainWindow.loadURL(`file://${__dirname}/ui/home.html`)
 })
 
 function createTunnel(config, event, addedBefore) {
