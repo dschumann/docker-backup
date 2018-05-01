@@ -105,7 +105,7 @@ $(document).ready(function()
         }
 
         if ($("#keyInput").val() != "") {
-            config.privateKey = $("#keyInput").val()
+            config.privateKey = require('fs').readFileSync($("#keyInput").val())
         }
 
         if ($("#keyPassInput").val() != "") {
@@ -138,7 +138,6 @@ $(document).ready(function()
     })
 
     $("#backupCreateButton").on('click', function() {
-        //ipcRenderer.send('createBackup', $("#containerEndpointDropdownMenuButton").text(), $("#containerListDropdownMenuButton").text())
         window.location = $("#containerEndpointDropdownMenuButton").text()+"/containers"+$("#containerListDropdownMenuButton").text()+"/export"
     })
 
@@ -156,7 +155,6 @@ $(document).ready(function()
                 $(this).remove()
             }
         })
-        //$("#modalRemoveSSH").toggle('modal')
     })
 
     $("#removeDockerButtonConfirm").on('click', function() {
@@ -172,7 +170,6 @@ $(document).ready(function()
                 $(this).remove()
             }
         })
-        //$("#modalRemoveDocker").toggle('modal')
     })
 
     $("#containerEndpointDropdown").on('click', function() {
