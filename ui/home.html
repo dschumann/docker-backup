@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="../node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js"></script>
+        <script src="home.js"></script>
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+
+        <script>if (window.module) module = window.module;</script>
+    </head>
+
+    <body>
+        <div class="modal fade" id="modalAddDocker" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAddDockerTitle">Add a Docker API endpoint</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="endpointInput">Endpoint</label>
+                                <input type="text" class="form-control" id="endpointInput" placeholder="http://localhost:2375/v1.30">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="padding-left: 8px;">
+                        <button type="button" id="dockerEndpointAddButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#modalAddDocker">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalRemoveDocker" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRemoveDockerTitle">Remove a Docker API endpoint</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dockerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Endpoint
+                            </button>
+                            <div id="dockerListDropdown" class="dropdown-menu" aria-labelledby="dockerDropdownMenuButton">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="padding-left: 8px;">
+                        <button type="button" id="removeDockerButtonConfirm" class="btn btn-warning btn-block" data-toggle="modal" data-target="#modalRemoveDocker">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAddSSH" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAddSSHTitle">Add an SSH tunnel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="addressInput">Server address</label>
+                                <input type="text" class="form-control" id="addressInput" placeholder="contoso.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="portInput">Server port</label>
+                                <input type="text" class="form-control" id="portInput" value="22">
+                            </div>
+                            <div class="form-group">
+                                <label for="usernameInput">Username</label>
+                                <input type="text" class="form-control" id="usernameInput" placeholder="root">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordInput">Password (if needed)</label>
+                                <input type="password" class="form-control" id="passwordInput">
+                            </div>
+                            <div class="form-group">
+                                <label for="keyInput">Key file location (if needed)</label>
+                                <input type="text" class="form-control" id="keyInput">
+                            </div>
+                            <div class="form-group">
+                                <label for="keyPassInput">Key file password (if needed)</label>
+                                <input type="password" class="form-control" id="keyPassInput">
+                            </div>
+                            <div class="form-group">
+                                <label for="localPortInput">Local port</label>
+                                <input type="text" class="form-control" id="localPortInput" placeholder="2375">
+                            </div>
+                            <div class="form-group">
+                                <label for="dockerHostInput">Docker host</label>
+                                <input type="text" class="form-control" id="dockerHostInput" placeholder="127.0.0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="dockerPortInput">Docker port</label>
+                                <input type="text" class="form-control" id="dockerPortInput" placeholder="2375">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="padding-left: 8px;">
+                        <button type="button" id="sshTunnelAddButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#modalAddSSH">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalRemoveSSH" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRemoveSSHTitle">Remove an SSH tunnel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Server
+                            </button>
+                            <div id="serverListDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="padding-left: 8px;">
+                        <button type="button" id="removeServerButtonConfirm" class="btn btn-warning btn-block" data-toggle="modal" data-target="#modalRemoveSSH">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCreateBackup" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCreateBackupTitle">Create a backup</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="containerEndpointDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Endpoint
+                                    </button>
+                                    <div id="containerEndpointDropdown" class="dropdown-menu" aria-labelledby="containerEndpointDropdownMenuButton">
+                                    </div>
+                                </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="containerListDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Container
+                                </button>
+                                <div id="containerListDropdown" class="dropdown-menu" aria-labelledby="containerListDropdownMenuButton">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="padding-left: 8px;">
+                        <button type="button" id="backupCreateButton" class="btn btn-success btn-block" data-toggle="modal" data-target="#modalCreateBackup">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs bg-primary nav-fill">
+            <li class="nav-item">
+                <a id="homeNavLink" class="nav-link active" href="#">SSH tunnels</a>
+            </li>
+            <li class="nav-item">
+                <a id="dockerNavLink" class="nav-link" href="#">Docker client connections</a>
+            </li>
+            <li class="nav-item">
+                <a id="backupNavLink" class="nav-link" href="#">Backups</a>
+            </li>
+            <li class="nav-item">
+                <a id="restoreNavLink" class="nav-link" href="#">Restore</a>
+            </li>
+
+        </ul>
+
+        <br>
+
+        <div id="homeContent">
+            <div class="row">
+                <div class="btn-group-md" role="group" style="margin-left:auto; margin-right:auto;">
+                    <button type="button" id="addServerButton" class="btn btn-info" data-toggle="modal" data-target="#modalAddSSH"><b>Create</b></button>
+                    <button type="button" id="editServerButton" class="btn btn-info"><b>Edit</b></button>
+                    <button type="button" id="removeServerButton" class="btn btn-info" data-toggle="modal" data-target="#modalRemoveSSH"><b>Remove</b></button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row" style="margin: 24px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">SSH host</th>
+                        <th scope="col">Local port</th>
+                        <th scope="col">Docker host:port</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="dockerContent" style="display: none;">
+            <div class="row">
+                <div class="btn-group-md" role="group" style="margin-left:auto; margin-right:auto;">
+                    <button type="button" id="addDockerButton" class="btn btn-info" data-toggle="modal" data-target="#modalAddDocker"><b>Create</b></button>
+                    <button type="button" id="editDockerButton" class="btn btn-info"><b>Edit</b></button>
+                    <button type="button" id="removeDockerButton" class="btn btn-info" data-toggle="modal" data-target="#modalRemoveDocker"><b>Remove</b></button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row" style="margin: 24px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Endpoint</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="backupContent" style="display: none;">
+            <div class="row">
+                <div class="btn-group-md" role="group" style="margin-left:auto; margin-right:auto;">
+                    <button type="button" id="createBackupButton" class="btn btn-info" data-toggle="modal" data-target="#modalCreateBackup"><b>Create a backup</b></button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row" style="margin: 24px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Endpoint</th>
+                            <th scope="col">Container</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="restoreContent" style="display: none;">
+            <div class="row">
+                <div class="btn-group-md" role="group" style="margin-left:auto; margin-right:auto;">
+                    <button type="button" id="restoreBackupButton" class="btn btn-info" data-toggle="modal" data-target="#modalRestoreBackup"><b>Restore a backup</b></button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

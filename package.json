@@ -1,0 +1,22 @@
+{
+  "name": "docker-backup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules\\.bin\\electron index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.1.0",
+    "bootstrap-material-design": "^4.1.1",
+    "electron": "^1.8.4",
+    "electron-dl": "^1.11.0",
+    "jquery": "^3.3.1",
+    "node-ssh": "^5.1.1",
+    "popper.js": "^1.14.3",
+    "request": "^2.85.0",
+    "ssh2": "^0.6.0"
+  }
+}
