@@ -1,7 +1,7 @@
 # docker-inspect
 A quick and dirty solution to make backups of your docker containers. Uses the Docker API through Docker.DotNet.
 
-[Screenshot of the application](https://raw.githubusercontent.com/bmsimons/docker-backup/master/docker-backup/artwork/screenshot-1.png)
+![Screenshot of the application](artwork/screenshot-1.png)
 
 ## Getting started
 This project comes with a Visual Studio solution file. Open this file in VS, retrieve all NuGet packages and build the project. This should result in a working binary.
